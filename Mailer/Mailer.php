@@ -12,8 +12,8 @@
 namespace FOS\UserBundle\Mailer;
 
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
 
 /**
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
@@ -31,7 +31,7 @@ class Mailer implements MailerInterface
     protected $router;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
     protected $templating;
 
@@ -43,12 +43,10 @@ class Mailer implements MailerInterface
     /**
      * Mailer constructor.
      *
-     * @param \Swift_Mailer         $mailer
-     * @param UrlGeneratorInterface $router
-     * @param EngineInterface       $templating
-     * @param array                 $parameters
+     * @param \Swift_Mailer $mailer
+     * @param Twig          $twig
      */
-    public function __construct($mailer, UrlGeneratorInterface  $router, EngineInterface $templating, array $parameters)
+    public function __construct($mailer, UrlGeneratorInterface $router, Environment $templating, array $parameters)
     {
         $this->mailer = $mailer;
         $this->router = $router;
@@ -62,11 +60,11 @@ class Mailer implements MailerInterface
     public function sendConfirmationEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['confirmation.template'];
-        $url = $this->router->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
-        $rendered = $this->templating->render($template, array(
+        $url = $this->router->generate('fos_user_registration_confirm', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $rendered = $this->templating->render($template, [
             'user' => $user,
             'confirmationUrl' => $url,
-        ));
+        ]);
         $this->sendEmailMessage($rendered, $this->parameters['from_email']['confirmation'], (string) $user->getEmail());
     }
 
@@ -76,11 +74,11 @@ class Mailer implements MailerInterface
     public function sendResettingEmailMessage(UserInterface $user)
     {
         $template = $this->parameters['resetting.template'];
-        $url = $this->router->generate('fos_user_resetting_reset', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
-        $rendered = $this->templating->render($template, array(
+        $url = $this->router->generate('fos_user_resetting_reset', ['token' => $user->getConfirmationToken()], UrlGeneratorInterface::ABSOLUTE_URL);
+        $rendered = $this->templating->render($template, [
             'user' => $user,
             'confirmationUrl' => $url,
-        ));
+        ]);
         $this->sendEmailMessage($rendered, $this->parameters['from_email']['resetting'], (string) $user->getEmail());
     }
 

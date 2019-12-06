@@ -39,17 +39,17 @@ abstract class RoleCommand extends Command
     protected function configure()
     {
         $this
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
                 new InputArgument('role', InputArgument::OPTIONAL, 'The role'),
                 new InputOption('super', null, InputOption::VALUE_NONE, 'Instead specifying role, use this to quickly add the super administrator role'),
-            ));
+            ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
         $role = $input->getArgument('role');
@@ -57,24 +57,28 @@ abstract class RoleCommand extends Command
 
         if (null !== $role && $super) {
             throw new \InvalidArgumentException('You can pass either the role or the --super option (but not both simultaneously).');
+
+            return 1;
         }
 
         if (null === $role && !$super) {
             throw new \RuntimeException('Not enough arguments.');
+
+            return 1;
         }
 
         $manipulator = $this->userManipulator;
         $this->executeRoleCommand($manipulator, $output, $username, $super, $role);
+
+        return 0;
     }
 
     /**
      * @see Command
      *
-     * @param UserManipulator $manipulator
-     * @param OutputInterface $output
-     * @param string          $username
-     * @param bool            $super
-     * @param string          $role
+     * @param string $username
+     * @param bool   $super
+     * @param string $role
      */
     abstract protected function executeRoleCommand(UserManipulator $manipulator, OutputInterface $output, $username, $super, $role);
 
@@ -83,7 +87,7 @@ abstract class RoleCommand extends Command
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $questions = array();
+        $questions = [];
 
         if (!$input->getArgument('username')) {
             $question = new Question('Please choose a username:');

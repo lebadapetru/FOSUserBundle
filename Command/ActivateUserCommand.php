@@ -42,9 +42,9 @@ class ActivateUserCommand extends Command
         $this
             ->setName('fos:user:activate')
             ->setDescription('Activate a user')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
-            ))
+            ])
             ->setHelp(<<<'EOT'
 The <info>fos:user:activate</info> command activates a user (so they will be able to log in):
 
@@ -56,13 +56,15 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
 
         $this->userManipulator->activate($username);
 
         $output->writeln(sprintf('User "%s" has been activated.', $username));
+
+        return 0;
     }
 
     /**

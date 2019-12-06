@@ -42,9 +42,9 @@ class DeactivateUserCommand extends Command
         $this
             ->setName('fos:user:deactivate')
             ->setDescription('Deactivate a user')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('username', InputArgument::REQUIRED, 'The username'),
-            ))
+            ])
             ->setHelp(<<<'EOT'
 The <info>fos:user:deactivate</info> command deactivates a user (will not be able to log in)
 
@@ -56,13 +56,15 @@ EOT
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
 
         $this->userManipulator->deactivate($username);
 
         $output->writeln(sprintf('User "%s" has been deactivated.', $username));
+
+        return 0;
     }
 
     /**

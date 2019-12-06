@@ -11,9 +11,11 @@
 
 namespace FOS\UserBundle\Tests\Util;
 
+use DG\BypassFinals;
 use FOS\UserBundle\Tests\TestUser;
 use FOS\UserBundle\Util\PasswordUpdater;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
 class PasswordUpdaterTest extends TestCase
 {
@@ -25,6 +27,8 @@ class PasswordUpdaterTest extends TestCase
 
     protected function setUp()
     {
+        BypassFinals::enable();
+
         $this->encoderFactory = $this->getMockBuilder('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface')->getMock();
 
         $this->updater = new PasswordUpdater($this->encoderFactory);
@@ -54,9 +58,16 @@ class PasswordUpdaterTest extends TestCase
 
     public function testUpdatePasswordWithBCrypt()
     {
-        $encoder = $this->getMockBuilder('Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder')
-            ->disableOriginalConstructor()
-            ->getMock();
+        if (class_exists(NativePasswordEncoder::class)) {
+            $encoder = $this->getMockBuilder('Symfony\Component\Security\Core\Encoder\NativePasswordEncoder')
+                ->disableOriginalConstructor()
+                ->getMock();
+        } else {
+            $encoder = $this->getMockBuilder('Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder')
+                ->disableOriginalConstructor()
+                ->getMock();
+        }
+
         $user = new TestUser();
         $user->setPlainPassword('password');
         $user->setSalt('old_salt');

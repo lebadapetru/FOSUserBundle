@@ -19,7 +19,7 @@ use FOS\UserBundle\Form\Factory\FactoryInterface;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\GroupManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  * @author Christophe Coevoet <stof@notk.org>
  */
-class GroupController extends Controller
+final class GroupController extends AbstractController
 {
     private $eventDispatcher;
     private $formFactory;
@@ -50,9 +50,9 @@ class GroupController extends Controller
      */
     public function listAction()
     {
-        return $this->render('@FOSUser/Group/list.html.twig', array(
+        return $this->render('@FOSUser/Group/list.html.twig', [
             'groups' => $this->groupManager->findGroups(),
-        ));
+        ]);
     }
 
     /**
@@ -64,16 +64,15 @@ class GroupController extends Controller
      */
     public function showAction($groupName)
     {
-        return $this->render('@FOSUser/Group/show.html.twig', array(
+        return $this->render('@FOSUser/Group/show.html.twig', [
             'group' => $this->findGroupBy('name', $groupName),
-        ));
+        ]);
     }
 
     /**
      * Edit one group, show the edit form.
      *
-     * @param Request $request
-     * @param string  $groupName
+     * @param string $groupName
      *
      * @return Response
      */
@@ -100,7 +99,7 @@ class GroupController extends Controller
             $this->groupManager->updateGroup($group);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_group_show', array('groupName' => $group->getName()));
+                $url = $this->generateUrl('fos_user_group_show', ['groupName' => $group->getName()]);
                 $response = new RedirectResponse($url);
             }
 
@@ -109,16 +108,14 @@ class GroupController extends Controller
             return $response;
         }
 
-        return $this->render('@FOSUser/Group/edit.html.twig', array(
+        return $this->render('@FOSUser/Group/edit.html.twig', [
             'form' => $form->createView(),
             'group_name' => $group->getName(),
-        ));
+        ]);
     }
 
     /**
      * Show the new form.
-     *
-     * @param Request $request
      *
      * @return Response
      */
@@ -140,7 +137,7 @@ class GroupController extends Controller
             $this->groupManager->updateGroup($group);
 
             if (null === $response = $event->getResponse()) {
-                $url = $this->generateUrl('fos_user_group_show', array('groupName' => $group->getName()));
+                $url = $this->generateUrl('fos_user_group_show', ['groupName' => $group->getName()]);
                 $response = new RedirectResponse($url);
             }
 
@@ -149,16 +146,15 @@ class GroupController extends Controller
             return $response;
         }
 
-        return $this->render('@FOSUser/Group/new.html.twig', array(
+        return $this->render('@FOSUser/Group/new.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
      * Delete one group.
      *
-     * @param Request $request
-     * @param string  $groupName
+     * @param string $groupName
      *
      * @return RedirectResponse
      */

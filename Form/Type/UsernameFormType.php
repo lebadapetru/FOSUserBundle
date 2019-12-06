@@ -30,8 +30,6 @@ class UsernameFormType extends AbstractType
 
     /**
      * Constructor.
-     *
-     * @param UserToUsernameTransformer $usernameTransformer
      */
     public function __construct(UserToUsernameTransformer $usernameTransformer)
     {
@@ -52,16 +50,6 @@ class UsernameFormType extends AbstractType
     public function getParent()
     {
         return TextType::class;
-    }
-
-    // BC for SF < 3.0
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 
     /**
