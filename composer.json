@@ -1,5 +1,5 @@
 {
-    "name": "friendsofsymfony/user-bundlezz",
+    "name": "friendsofsymfony/user-bundle",
     "type": "symfony-bundle",
     "description": "Symfony FOSUserBundle",
     "keywords": [
@@ -21,14 +21,14 @@
         }
     ],
     "require": {
-        "php": "^7.2",
-        "symfony/form": "^3.4 || ^4.3",
-        "symfony/framework-bundle": "^3.4 || ^4.3",
-        "symfony/security-bundle": "^3.4 || ^4.3",
-        "symfony/templating": "^3.4 || ^4.3",
-        "symfony/translation": "^3.4 || ^4.3",
-        "symfony/twig-bundle": "^3.4 || ^4.3",
-        "symfony/validator": "^3.4 || ^4.3",
+        "php": "^7.4",
+        "symfony/form": "^4.3 || 5.0.*",
+        "symfony/framework-bundle": "^4.3 || 5.0.*",
+        "symfony/security-bundle": "^4.3 || 5.0.*",
+        "symfony/templating": "^4.3 || 5.0.*",
+        "symfony/translation": "^4.3 || 5.0.*",
+        "symfony/twig-bundle": "^4.3 || 5.0.*",
+        "symfony/validator": "^4.3 || 5.0.*",
         "twig/twig": "^2.0"
     },
     "conflict": {
@@ -37,13 +37,13 @@
     },
     "require-dev": {
         "dg/bypass-finals": "^1.1",
-        "doctrine/doctrine-bundle": "^1.12",
+        "doctrine/doctrine-bundle": "^2.0",
         "friendsofphp/php-cs-fixer": "^2.15",
         "phpunit/phpunit": "^6.5",
         "swiftmailer/swiftmailer": "^4.3 || ^5.0 || ^6.0",
-        "symfony/console": "^3.4 || ^4.3",
-        "symfony/phpunit-bridge": "^3.4 || ^4.3",
-        "symfony/yaml": "^3.4 || ^4.3"
+        "symfony/console": "^4.3 || 5.0.*",
+        "symfony/phpunit-bridge": "^4.3 || 5.0.*",
+        "symfony/yaml": "^4.3 || 5.0.*"
     },
     "config": {
         "sort-packages": true
