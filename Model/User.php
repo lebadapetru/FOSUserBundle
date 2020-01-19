@@ -31,65 +31,65 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * @var string
      */
-    protected $username;
+    protected string $username;
 
     /**
      * @var string
      */
-    protected $usernameCanonical;
+    protected string $usernameCanonical;
 
     /**
      * @var string
      */
-    protected $email;
+    protected string $email;
 
     /**
      * @var string
      */
-    protected $emailCanonical;
+    protected string $emailCanonical;
 
     /**
      * @var bool
      */
-    protected $enabled;
+    protected bool $enabled;
 
     /**
      * The salt to use for hashing.
      *
      * @var string
      */
-    protected $salt;
+    protected string $salt;
 
     /**
      * Encrypted password. Must be persisted.
      *
      * @var string
      */
-    protected $password;
+    protected string $password;
 
     /**
      * Plain password. Used for model validation. Must not be persisted.
      *
      * @var string
      */
-    protected $plainPassword;
+    protected string $plainPassword;
 
     /**
      * @var \DateTime|null
      */
-    protected $lastLogin;
+    protected ?\DateTime $lastLogin;
 
     /**
      * Random string sent to the user email address in order to verify it.
      *
      * @var string|null
      */
-    protected $confirmationToken;
+    protected ?string $confirmationToken;
 
     /**
      * @var \DateTime|null
      */
-    protected $passwordRequestedAt;
+    protected ?\DateTime $passwordRequestedAt;
 
     /**
      * @var GroupInterface[]|Collection
@@ -99,7 +99,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * @var array
      */
-    protected $roles;
+    protected array $roles;
 
     /**
      * User constructor.
