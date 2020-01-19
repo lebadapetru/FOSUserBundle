@@ -121,7 +121,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function addRole($role)
+    public function addRole(string $role)
     {
         $role = strtoupper($role);
         if ($role === static::ROLE_DEFAULT) {
@@ -291,7 +291,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function hasRole($role)
+    public function hasRole(string $role)
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
@@ -336,7 +336,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function removeRole($role)
+    public function removeRole(string $role)
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -349,7 +349,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setUsername($username)
+    public function setUsername(string $username)
     {
         $this->username = $username;
 
@@ -359,7 +359,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setUsernameCanonical($usernameCanonical)
+    public function setUsernameCanonical(string $usernameCanonical)
     {
         $this->usernameCanonical = $usernameCanonical;
 
@@ -369,7 +369,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setSalt($salt)
+    public function setSalt(?string $salt)
     {
         $this->salt = $salt;
 
@@ -379,7 +379,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -389,7 +389,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setEmailCanonical($emailCanonical)
+    public function setEmailCanonical(string $emailCanonical)
     {
         $this->emailCanonical = $emailCanonical;
 
@@ -399,7 +399,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setEnabled($boolean)
+    public function setEnabled(bool $boolean)
     {
         $this->enabled = (bool) $boolean;
 
@@ -409,7 +409,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
 
@@ -419,7 +419,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setSuperAdmin($boolean)
+    public function setSuperAdmin(bool $boolean)
     {
         if (true === $boolean) {
             $this->addRole(static::ROLE_SUPER_ADMIN);
@@ -453,7 +453,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setConfirmationToken($confirmationToken)
+    public function setConfirmationToken(?string $confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -483,7 +483,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function isPasswordRequestNonExpired($ttl)
+    public function isPasswordRequestNonExpired(int $ttl)
     {
         return $this->getPasswordRequestedAt() instanceof \DateTime &&
                $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
@@ -527,7 +527,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function hasGroup($name)
+    public function hasGroup(string $name)
     {
         return in_array($name, $this->getGroupNames());
     }
