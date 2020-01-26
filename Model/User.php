@@ -26,7 +26,7 @@ abstract class User implements UserInterface, GroupableInterface
     /**
      * @var mixed
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @var string
