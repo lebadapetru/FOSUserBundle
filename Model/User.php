@@ -72,7 +72,7 @@ abstract class User implements UserInterface, GroupableInterface
      *
      * @var string
      */
-    protected string $plainPassword;
+    protected ?string $plainPassword;
 
     /**
      * @var \DateTime|null
