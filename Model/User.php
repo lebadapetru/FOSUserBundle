@@ -58,7 +58,7 @@ abstract class User implements UserInterface, GroupableInterface
      *
      * @var string
      */
-    protected string $salt;
+    protected ?string $salt = null;
 
     /**
      * Encrypted password. Must be persisted.
